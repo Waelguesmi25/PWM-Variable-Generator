@@ -71,3 +71,7 @@ Connect the potentiometers and the FTDI (UART) module according to the pinout ta
 Ensure you have Python installed, then run the dashboard script:
 ```bash
 python dashboard.py
+
+
+https://github.com/user-attachments/assets/50cf601c-949f-483e-94a8-f29e89fb66fe
+
