@@ -73,5 +73,3 @@ Ensure you have Python installed, then run the dashboard script:
 python dashboard.py
 
 
-https://github.com/user-attachments/assets/50cf601c-949f-483e-94a8-f29e89fb66fe
-
