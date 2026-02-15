@@ -1,0 +1,17 @@
+================================================================================
+                       UART COMMUNICATION PINS
+================================================================================
+
+Pin          | GPIO Port  | Pin Number | Interface  | Function
+---------|------------|------------|-----------|----------------------------------
+UART_TX      | GPIOA      | PIN 2      | UART2      | Transmission (115200 baud)
+UART_RX      | GPIOA      | PIN 3      | UART2      | Réception (115200 baud)
+
+UART Config:
+  - BaudRate: 115200
+  - WordLength: 8 bits
+  - StopBits: 1
+  - Parity: None
+  - Mode: TX & RX
+  - HardwareFlow: None
+  - Oversampling: 16
