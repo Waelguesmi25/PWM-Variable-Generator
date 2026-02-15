@@ -1,0 +1,123 @@
+================================================================================
+                  APPLICATION PYTHON - DASHBOARD STM32
+                      PWM Analyzer Interface
+================================================================================
+
+RESUME EXECUTIF
+================================================================================
+
+L'application Python offre une interface graphique moderne et sécurisée pour 
+visualiser et analyser en temps réel le signal PWM généré par le STM32F407.
+
+Le programme se connecte au microcontrôleur via port série UART (115200 bauds) 
+et affiche les données avec une interface professionnelle inspirée des systèmes 
+de monitoring électronique.
+
+================================================================================
+INSTALLATION & DEMARRAGE
+================================================================================
+
+PREREQUIS:
+  Python 3.8+
+  pip (package manager)
+
+INSTALLER LES DEPENDANCES:
+
+  pip install pyserial
+  pip install pillow      
+
+LANCER L'APPLICATION:
+
+  python Dashboard_Python.py
+
+================================================================================
+FLUX D'UTILISATION COMPLET
+================================================================================
+
+ETAPE 1 - LOGIN
+  1. Lancer l'application: python Dashboard_Python.py
+  2. Entrer le mot de passe: pwm
+  3. Cliquer "ACCÉDER AU DASHBOARD ➤" ou appuyer Enter
+
+ETAPE 2 - CONNEXION AU STM32
+  1. Sélectionner le port COM dans le menu déroulant
+     (ex: COM5, COM3, /dev/ttyUSB0)
+  2. Cliquer "ACTIVER SYSTÈME" (bouton vert)
+  3. Attendre la connexion
+
+ETAPE 3 - MONITORING
+  1. Les valeurs s'affichent en temps réel
+  2. Fréquence visible à gauche (cyan)
+  3. Duty Cycle visible à droite (jaune)
+  4. Signal PWM visible sur l'oscilloscope
+  5. Attendre 2 secondes pour première mise à jour
+
+ETAPE 4 - DECONNEXION
+  1. Cliquer "DÉCONNECTER" (bouton rouge)
+  2. La connexion série se ferme
+  3. Pour reconnecter, cliquer à nouveau "ACTIVER SYSTÈME"
+
+================================================================================
+COMMENT CA FONCTIONNE?
+================================================================================
+
+1. COMMUNICATION SERIE
+   └─ Connexion au port COM du STM32 (115200 bauds)
+   └─ Réception des données UART toutes les 2 secondes
+   └─ Format reçu:
+      +--- ETAT DU SYSTEME -----------------+
+      | Frequence  : 5000 Hz                |
+      | Rapport Cy : 50 %   [|||||.....]   |
+      | Etat LEDs  : [1:ON ] [2:OFF] [3:OFF] |
+      +-------------------------------------+
+
+2. PARSING DES DONNEES
+   └─ Extraction de la fréquence avec regex: (\d+) Hz
+   └─ Extraction du duty cycle avec regex: (\d+) %
+   └─ Stockage dans variables globales
+
+3. THREAD NON-BLOQUANT
+   └─ Un thread daemon lit continuellement le port série
+   └─ L'interface GUI reste responsive
+   └─ Mise à jour sans gel de l'application
+   └─ Thread se termine automatiquement si déconnecté
+
+4. VISUALISATION EN TEMPS REEL
+   └─ Label Fréquence: Affiche en cyan (ex: "5000")
+   └─ Label Duty Cycle: Affiche en jaune (ex: "50 %")
+   └─ Canvas oscilloscope: Redessine le signal PWM
+   └─ Grille style oscilloscope classique
+   └─ Signal adapté automatiquement à la fréquence
+================================================================================
+DEPANNAGE RAPIDE
+================================================================================
+
+PROBLEME 1: ImportError: No module named 'serial'
+SOLUTION:
+  pip install pyserial
+
+PROBLEME 2: ImportError: No module named 'PIL'
+SOLUTION:
+  pip install pillow
+
+PROBLEME 3: Aucun port série détecté
+SOLUTION:
+  - Vérifier que le STM32 est connecté en USB
+  - Vérifier les drivers STLink sont installés
+  - Ouvrir Gestionnaire de périphériques Windows
+  - Vérifier que le port COM est visible
+
+PROBLEME 4: Les données ne s'affichent pas
+SOLUTION:
+  - Attendre 2 secondes après connexion
+  - Vérifier que le STM32 envoie bien les données
+  - Vérifier le débit UART: 115200 bauds
+  - Vérifier le format UART du STM32
+
+PROBLEME 5: L'interface gèle
+SOLUTION:
+  C'est NORMAL! Le thread daemon lit en arrière-plan
+  L'app réagit normalement au clics
+================================================================================
+FIN DE LA DOCUMENTATION
+================================================================================
